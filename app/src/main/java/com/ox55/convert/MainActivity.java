@@ -68,22 +68,27 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View v) {
                 int firstValue = Integer.valueOf(value1.getText().toString());
-                if(firstValue < 2147483647 && (String.valueOf(firstValue).matches("^\\d+$"))) {
-                    if (unit1.getSelectedItem().toString().equals("Kilograms") && unit2.getSelectedItem().toString().equals("pounds")) {
-                        value2.setText(String.valueOf(firstValue*2.2046));
-                    }else if (unit1.getSelectedItem().toString().equals("pounds") && unit2.getSelectedItem().toString().equals("Kilograms")) {
-                        value2.setText(String.valueOf(firstValue/2.2046));
-                    }else if (unit1.getSelectedItem().toString().equals("Metres") && unit2.getSelectedItem().toString().equals("Centimetres")) {
-                        value2.setText(String.valueOf(firstValue*100));
-                    }else if (unit1.getSelectedItem().toString().equals("Centimetres") && unit2.getSelectedItem().toString().equals("Metres")) {
-                        value2.setText(String.valueOf(firstValue/100));
-                    }else if (unit1.getSelectedItem().toString().equals("Kilometres") && unit2.getSelectedItem().toString().equals("miles")) {
-                        value2.setText(String.valueOf(firstValue/1.609));
-                    }else if (unit1.getSelectedItem().toString().equals("miles") && unit2.getSelectedItem().toString().equals("Kilometres")) {
-                        value2.setText(String.valueOf(firstValue*1.609));
+                if (firstValue < 2147483647 && (String.valueOf(firstValue).matches("^\\d+$"))) {
+                    double convertedValue = firstValue;  // Use double for decimal conversions
+                    String unit1Selected = unit1.getSelectedItem().toString();
+                    String unit2Selected = unit2.getSelectedItem().toString();
+
+                    if (unit1Selected.equals("Kilograms") && unit2Selected.equals("pounds")) {
+                        convertedValue *= 2.2046;
+                    } else if (unit1Selected.equals("pounds") && unit2Selected.equals("Kilograms")) {
+                        convertedValue /= 2.2046;
+                    } else if (unit1Selected.equals("Metres") && unit2Selected.equals("Centimetres")) {
+                        convertedValue *= 100;
+                    } else if (unit1Selected.equals("Centimetres") && unit2Selected.equals("Metres")) {
+                        convertedValue /= 100;
+                    } else if (unit1Selected.equals("Kilometres") && unit2Selected.equals("miles")) {
+                        convertedValue /= 1.609;
+                    } else if (unit1Selected.equals("miles") && unit2Selected.equals("Kilometres")) {
+                        convertedValue *= 1.609;
                     } else {
                         Toast.makeText(MainActivity.this, "Operation not yet supported", Toast.LENGTH_SHORT).show();
                     }
+                    value2.setText(String.valueOf(convertedValue));
                 } else {
                     Toast.makeText(MainActivity.this, "Number Too Large or invalid", Toast.LENGTH_SHORT).show();
                 }
